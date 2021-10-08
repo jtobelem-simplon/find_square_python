@@ -3,8 +3,12 @@
 
 import sys
 import re
+#import dynamic_solution
 
-
+'''
+Parcourt la liste des noms de fichiers, pour chacun ouvre la carte correspondante et cherche/affiche le plus grand carré possible
+si la carte est valide.
+'''
 def find_square(filenames):
     for filename in filenames :
         print('\n>processing {} ...'.format(filename))
@@ -23,7 +27,7 @@ def find_square(filenames):
                     continue
 
                 else :
-                    process_map(carte, obstacle)
+                    process_map(carte, vide, obstacle, plein)
                     
 
         except IOError :
@@ -57,30 +61,38 @@ def is_map_valid(carte, nb_lines, vide='.', obstacle='o', plein='X'):
     # jusqu'ici, pas d'erreur
     return True
 
+'''
+Parcourt la carte à la recherche du plus grand carré possible. A la fin, remplace les cases libres de ce carré par des cases 'plein'.
+'''
+def process_map(carte, vide, obstacle, plein):
+    max_square = (0,0,0) # pos_line, pos_col, size
 
-def process_map(carte, obstacle):
-    max_square = (0,0,0) # pos_line, pos_col, wide
+    #prefix = dynamic_solution.compute_prefix(carte, vide, plein)
 
     for i in range(len(carte)):
         for j in range(len(carte[0])):
-            wide_range = min(len(carte[0])-j, len(carte)-i)
+            size_range = min(len(carte[0])-j, len(carte)-i)
 
-            for k in range(max_square[2]+1, wide_range):
-                if is_full(carte, i, j, k, obstacle):
+            for k in range(max_square[2]+1, size_range):
+                if is_free(carte, i, j, k, obstacle):
+                #if dynamic_solution.is_free(prefix, i, j, k):
                     max_square = (i, j, k)
 
 
-    print("find best at {} {} and wide {}".format(*max_square))
+    print("find best at {} {} and size {}".format(*max_square))
 
-    pos_line, pos_col, wide = max_square
+    pos_line, pos_col, size = max_square
 
-    for i in range(wide):
-        carte[pos_line+i] = carte[pos_line+i][:pos_col] + 'X'*wide + carte[pos_line+i][pos_col+wide:]
+    for i in range(size):
+        carte[pos_line+i] = carte[pos_line+i][:pos_col] + plein*size + carte[pos_line+i][pos_col+size:]
 
     print('\n'.join(carte))
 
-def is_full(carte, pos_line, pos_col, wide, obstacle):
-    return all([line[pos_col:pos_col+wide].count(obstacle) == 0 for line in carte[pos_line:pos_line+wide]])
+'''
+Free si la carte possede un emplacement carré de taille 'size' libre d'obstacle.
+'''
+def is_free(carte, pos_line, pos_col, size, obstacle):
+    return all([line[pos_col:pos_col+size].count(obstacle) == 0 for line in carte[pos_line:pos_line+size]])
 
     
 

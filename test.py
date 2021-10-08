@@ -21,9 +21,9 @@ class TestFindSquareMethods(unittest.TestCase):
             "..o.......o................",
         ]
   
-    def test_is_full(self):
-        self.assertTrue(find_square.is_full(self.carte, 0,5, 3, 'o'), "should find full square")
-        self.assertFalse(find_square.is_full(self.carte, 0,5, 9, 'o'), "should not find full square")
+    def test_is_free(self):
+        self.assertTrue(find_square.is_free(self.carte, 0,5, 3, 'o'), "should find full square")
+        self.assertFalse(find_square.is_free(self.carte, 0,5, 9, 'o'), "should not find full square")
 
     def test_is_valid(self):
         carte_not_ok_1 = [
