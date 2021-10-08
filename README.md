@@ -10,6 +10,8 @@ chmod +x find_square.py
 ./find_square.py cartes/*
 ```
 
+![exemple](screen.png)
+
 ## Tests et CI/CD
 - Le fichier test.py contient des tests pour les méthodes is_valid et is_free de find_square.py.
 - Les classes du projet qui héritent de unittest.TestCase sont executées à chaque push ou pull request sur le repository.
