@@ -16,7 +16,5 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.8
-          repository: jtobelem-simplon/find_square_python
       - name: Run tests with unittest
-        run: python TestFindSquareMethods.py
-        shell: sh
+        run: python ../../TestFindSquareMethods.py
