@@ -6,7 +6,7 @@ import random
 
 
 def map_gen(x, y, density):
-    print('{}.ox'.format(y))
+    print('{} . o x'.format(y))
     for i in range(int(y)):
         for j in range(int(x)):
             if (random.randint(0, int(y)) * 2) < int(density):
